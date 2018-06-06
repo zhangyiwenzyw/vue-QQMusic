@@ -5,12 +5,13 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+
 import {getSingerDetail} from 'api/singer'
 import {ERR_OK} from 'api/config'
 import {getMusic} from 'api/music'
 import {createSong} from 'common/js/song'
 import MusicList from 'components/music-list/music-list'
+import {mapGetters} from 'vuex'
 export default {
     data(){
         return{
