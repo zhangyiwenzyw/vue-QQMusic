@@ -8,10 +8,14 @@ import 'common/stylus/index.styl'
 import fastclick from 'fastclick'
 import VueLazyLoad from 'vue-lazyload'
 import store from './store'
+import 'lib-flexible/flexible.js'
+import VueTouch from 'vue-touch'
+
+Vue.use(VueTouch, {name: 'v-touch'})
 
 Vue.config.productionTip = false
-Vue.use(VueLazyLoad,{
-    loading: require('common/image/default.png')
+Vue.use(VueLazyLoad, {
+  loading: require('common/image/default.png')
 })
 fastclick.attach(document.body)
 /* eslint-disable no-new */

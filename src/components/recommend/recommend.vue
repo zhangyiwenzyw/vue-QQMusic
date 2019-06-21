@@ -1,36 +1,36 @@
 <template>
-   <div class="recommend">
-       <scroll ref="scroll" class="recommend-content" :data="discList">
-           <div>
-               <div v-if="recomends.length" class="slider-wrapper">
-                    <slider>
-                        <div v-for="(item,index) in recomends" :key="index">
-                            <a :href="item.linkUrl">
-                                <img class="needsclick" @load="loadImage" :src="item.picUrl">
-                            </a>
-                        </div>
-                    </slider>
-                </div>
-                <div class="recommend-list">
-                    <h1 class="list-title">热门歌单推荐</h1>
-                    <ul>
-                        <li class="item" v-for="(item,index) in discList" :key="index">
-                            <div class="icon">
-                                <img width="60" height="60"  v-lazy="item.imgurl" alt="">
+   <v-touch v-on:swipeleft="onSwipeLeft" v-on:swiperight="swiperright" class="wrapper recommend">
+            <scroll ref="scroll" class="recommend-content" :data="discList">
+            <div>
+                <div v-if="recomends.length" class="slider-wrapper">
+                        <slider>
+                            <div v-for="(item,index) in recomends" :key="index">
+                                <a :href="item.linkUrl">
+                                    <img class="needsclick" @load="loadImage" :src="item.picUrl">
+                                </a>
                             </div>
-                            <div class="text">
-                                <h2 class="name" v-text="item.creator.name"></h2>
-                                <p class="desc" v-text="item.dissname"></p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-           </div>
-           <div class="loading-container" v-show="!discList.length">
-               <loading></loading>  
-           </div>
-       </scroll>   
-   </div>
+                        </slider>
+                    </div>
+                    <div class="recommend-list">
+                        <h1 class="list-title">热门歌单推荐</h1>
+                        <ul>
+                            <li class="item" v-for="(item,index) in discList" :key="index">
+                                <div class="icon">
+                                    <img width="60" height="60"  v-lazy="item.imgurl" alt="">
+                                </div>
+                                <div class="text">
+                                    <h2 class="name" v-text="item.creator.name"></h2>
+                                    <p class="desc" v-text="item.dissname"></p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+            <div class="loading-container" v-show="!discList.length">
+                <loading></loading>
+            </div>
+            </scroll>
+   </v-touch>
 </template>
 <script>
 import Loading from 'base/loading/loading'
@@ -50,9 +50,15 @@ export default {
       setTimeout(()=>{
         this._getDiscList();
       },1000)
-   
+
   },
   methods: {
+    onSwipeLeft () {
+        this.$router.push('/singer')
+    },
+    swiperright() {
+        this.$router.push('/search')
+    },
     _getRecommend() {
       getRecommend().then(res => {
         console.log(res);
@@ -66,7 +72,7 @@ export default {
             if (res.code === ERR_OK) {
                 console.log(res.data.list)
                  this.discList = res.data.list
-            }    
+            }
         })
     },
     loadImage(){
@@ -118,7 +124,7 @@ export default {
                 padding: 0 20px 20px 20px;
                 .icon {
                     flex: 0 0 60px;
-                  
+
                     padding-right: 20px;
                 }
                  .text {
